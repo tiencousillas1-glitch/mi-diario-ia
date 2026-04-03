@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Mi Diario IA — OpenClaw, Agentes & Startups</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #050510;
+            --bg-secondary: #0a0a1a;
+            --bg-card: #0f0f1f;
+            --bg-card-hover: #151530;
+            --border-color: #1e1e3a;
+            --text-primary: #f0f0f8;
+            --text-secondary: #8888a8;
+            --text-muted: #555570;
+            --accent: #6c5ce7;
+            --accent-secondary: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.4);
+            --neon-green: #00ff88;
+            --neon-blue: #00d4ff;
+            --neon-pink: #ff006e;
+            --gradient-hero: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00d4ff 100%);
+            --gradient-cards: linear-gradient(180deg, rgba(108,92,231,0.1) 0%, transparent 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(108,92,231,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108,92,231,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -2;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .bg-glow-1 {
+            top: -200px; left: -100px;
+            background: var(--accent);
+            animation: float1 15s ease-in-out infinite;
+        }
+
+        .bg-glow-2 {
+            bottom: -200px; right: -100px;
+            background: var(--neon-blue);
+            animation: float2 18s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, -30px) scale(1.05); }
+        }
+
+        /* Header */
+        header {
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 24px;
+        }
+
+        .logo-icon {
+            font-size: 5em;
+            display: inline-block;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 20px var(--accent-glow)); }
+            50% { filter: drop-shadow(0 0 40px var(--accent)); }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(108, 92, 231, 0.15);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 50px;
+            font-size: 0.85em;
+            color: var(--accent-secondary);
+            backdrop-filter: blur(10px);
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* Hero Section */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-hero);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .hero-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .hero-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 80px rgba(108, 92, 231, 0.25);
+        }
+
+        .hero-card .icon {
+            font-size: 3em;
+            margin-bottom: 16px;
+        }
+
+        .hero-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .hero-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-header .icon {
+            font-size: 2em;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .section-header .tag {
+            margin-left: auto;
+            padding: 6px 14px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 20px;
+            font-size: 0.75em;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .news-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--gradient-cards);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .news-card:hover::after {
+            opacity: 1;
+        }
+
+        .news-category {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+        }
+
+        .category-openclaw {
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--accent-secondary);
+        }
+
+        .category-agents {
+            background: rgba(0, 212, 255, 0.15);
+            color: var(--neon-blue);
+        }
+
+        .category-startups {
+            background: rgba(255, 0, 110, 0.15);
+            color: var(--neon-pink);
+        }
+
+        .category-coding {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--neon-green);
+        }
+
+        .news-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-card p {
+            color: var(--text-secondary);
+            font-size: 0.92em;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-highlight {
+            background: rgba(0, 212, 255, 0.08);
+            border-left: 3px solid var(--neon-blue);
+            padding: 14px 18px;
+            margin: 18px 0;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.88em;
+            color: #a0e8ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .news-sources {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .source-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.75em;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .source-tag:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .source-tag .emoji {
+            font-size: 0.9em;
+        }
+
+        /* Featured Card */
+        .news-card.featured {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(108, 92, 231, 0.15) 100%);
+            border-color: rgba(108, 92, 231, 0.3);
+        }
+
+        .news-card.featured h3 {
+            font-size: 1.5em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+            background: var(--bg-secondary);
+        }
+
+        .footer-brand {
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        .footer-text a {
+            color: var(--accent-secondary);
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .news-grid { grid-template-columns: 1fr; }
+            header { padding: 60px 16px 40px; }
+            h1 { font-size: 2.5rem; }
+            .section-header { flex-wrap: wrap; }
+            .section-header .tag { margin-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon">🦞</span>
+        </div>
+        <h1>Mi Diario IA</h1>
+        <p class="subtitle">OpenClaw, Agentes IA, Startups & Device Coding</p>
+        <div class="badge-container">
+            <span class="badge">OpenClaw Updates</span>
+            <span class="badge">AI Agents</span>
+            <span class="badge">Startups</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Hero Cards -->
+        <div class="hero-grid">
+            <div class="hero-card">
+                <div class="icon">🦞</div>
+                <h3>OpenClaw</h3>
+                <p>Tu gateway AI personal. Multi-canal: WhatsApp, Telegram, Discord, iMessage y más. Self-hosted, siempre activo, en tu propia máquina.</p>
+            </div>
+            <div class="hero-card">
+                <div class="icon">🤖</div>
+                <h3>AI Agents</h3>
+                <p>Agentes que trabajan 24/7. Desde device coding hasta automation. OpenClaw, HermesAgent y más herramientas para construir tu ejército digital.</p>
+            </div>
+            <div class="hero-card">
+                <div class="icon">🚀</div>
+                <h3>Startups</h3>
+                <p>Casos reales, modelos de negocio y oportunidades. Cómo la IA está creando nuevas industrias y cambiando las reglas del juego.</p>
+            </div>
+        </div>
+
+        <!-- OpenClaw News -->
+        <section>
+            <div class="section-header">
+                <span class="icon">🦞</span>
+                <h2>OpenClaw Updates</h2>
+                <span class="tag">Nuevo</span>
+            </div>
+
+            <div class="news-grid">
+                <article class="news-card featured">
+                    <span class="news-category category-openclaw">🦞 OpenClaw v2026.4</span>
+                    <h3>OpenClaw 2026.4: Nueva versión con mejoras de Agentes y Skills</h3>
+                    <p>La nueva versión de OpenClaw trae mejoras significativas en el sistema de agentes. Node 24 es ahora la versión recomendada para mejor performance. Nuevas capacidades de memoria y sesiones aisladas.</p>
+                    <div class="news-highlight">
+                        💡关键词: Multi-agent routing, workspace isolation, y mejora en la conexión con Claude y GPT.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://docs.openclaw.ai" target="_blank" class="source-tag"><span class="emoji">📖</span> Documentación</a>
+                        <a href="https://github.com/openclaw/openclaw/releases" target="_blank" class="source-tag"><span class="emoji">🔗</span> GitHub Releases</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <span class="news-category category-openclaw">📦 Skills</span>
+                    <h3>ClawdHub: Nuevo marketplace de skills para OpenClaw</h3>
+                    <p> skills社区正在爆炸性增长！Desde invoice generators hasta weather reports, puedes instalar nuevas capacidades con un solo comando. Los mejores skills de la comunidad.</p>
+                    <div class="news-highlight">
+                        💡 ClawdHub es el equivalente de npm para agentes IA. Instala, prueba, monetiza.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://clawdhub.com" target="_blank" class="source-tag"><span class="emoji">🔗</span> ClawdHub</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <span class="news-category category-coding">🔧 Device Coding</span>
+                    <h3>Device Coding con OpenClaw: Automatiza tu setup completo</h3>
+                    <p>OpenClaw puede manejar archivos, ejecutar comandos, y controlar tu ambiente de desarrollo. El futuro del coding es conversacional y hands-free.</p>
+                    <div class="news-highlight">
+                        💡 Usa OpenClaw como tu assistant de desarrollo. Git operations, file management, y más — todo por chat.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://docs.openclaw.ai" target="_blank" class="source-tag"><span class="emoji">📖</span> Docs</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- AI Agents -->
+        <section style="margin-top: 60px;">
+            <div class="section-header">
+                <span class="icon">🤖</span>
+                <h2>AI Agents & HermesAgent</h2>
+                <span class="tag">Tendencia</span>
+            </div>
+
+            <div class="news-grid">
+                <article class="news-card">
+                    <span class="news-category category-agents">🤖 HermesAgent</span>
+                    <h3>HermesAgent: El agente que está cambiando el juego</h3>
+                    <p>HermesAgent es un framework de agentes IA open-source que permite construir asistentes especializados. Combinado con OpenClaw, puedes crear agentes para cualquier tarea.</p>
+                    <div class="news-highlight">
+                        💡 La combinación de HermesAgent + OpenClaw = automatización sin límites.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://github.com" target="_blank" class="source-tag"><span class="emoji">📦</span> GitHub</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <span class="news-category category-agents">🧠 Memory</span>
+                    <h3>Cómo los Agents recuerdan todo: Memory Systems</h3>
+                    <p>OpenClaw tiene sistema de memoria avanzado. MEMORY.md, daily logs, y búsqueda semántica. Tu agente nunca olvida nada importante.</p>
+                    <div class="news-highlight">
+                        💡 La diferencia entre un agent útil y uno exceptional es su memoria.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://docs.openclaw.ai" target="_blank" class="source-tag"><span class="emoji">📖</span> Documentación</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <span class="news-category category-coding">⚡ Tool Use</span>
+                    <h3>Tool Use: Cómo los Agents usan herramientas</h3>
+                    <p>La próxima generación de agents no solo responde — actúa. OpenClaw permite a los agentes ejecutar código, manejar archivos, buscar la web, y más.</p>
+                    <div class="news-highlight">
+                        💡 Un agent que puede usar herramientas = un agent que puede hacer cosas reales.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://docs.openclaw.ai" target="_blank" class="source-tag"><span class="emoji">📖</span> Docs</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Startups & Opportunities -->
+        <section style="margin-top: 60px;">
+            <div class="section-header">
+                <span class="icon">🚀</span>
+                <h2>Startups & Oportunidades</h2>
+            </div>
+
+            <div class="news-grid">
+                <article class="news-card">
+                    <span class="news-category category-startups">💰 Monetización</span>
+                    <h3>Monetiza tu OpenClaw: Servicios de Agent Building</h3>
+                    <p>Hay demanda por desarrolladores que sepan construir agents personalizados. Plataformas como Fiverr ya tienen gigs de "AI agent setup" — de $50 a $500 por proyecto.</p>
+                    <div class="news-highlight">
+                        💡 Tu conocimiento de OpenClaw = servicio vendible. Empieza hoy.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://fiverr.com" target="_blank" class="source-tag"><span class="emoji">💼</span> Fiverr</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <span class="news-category category-startups">🎯 Casos de Uso</span>
+                    <h3>Agent como Producto: SaaS de Automation</h3>
+                    <p>Startups están construyendo SaaS basados en agents. Desde customer support automatizado hasta research assistants. El modelo: subscription + usage.</p>
+                    <div class="news-highlight">
+                        💡 El próximo unicornio podría ser un agent company.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://twitter.com" target="_blank" class="source-tag"><span class="emoji">𝕏</span> Twitter/X</a>
+                    </div>
+                </article>
+
+                <article class="news-card">
+                    <span class="news-category category-coding">🛠️ Composio</span>
+                    <h3>Composio: Conecta cualquier app a tus agents</h3>
+                    <p>Composio permite que agents controlen Gmail, GitHub, Notion, Slack y 500+ apps. La pieza que faltaba para automation real. Integración directa con OpenClaw.</p>
+                    <div class="news-highlight">
+                        💡 Sin Composio, tu agent está ciego. Con Composio, puede actuar en el mundo real.
+                    </div>
+                    <div class="news-sources">
+                        <a href="https://composio.dev" target="_blank" class="source-tag"><span class="emoji">🔗</span> Composio</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-brand">🦞</div>
+        <p class="footer-text">
+            Generado por <a href="#">Clowy</a> — Agente IA de Tien<br>
+            <small>🦞</small>
+        </p>
+    </footer>
+
+    <script>
+        // Set current date
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date().toLocaleDateString('es-ES', options);
+        document.title = `Mi Diario IA — ${date}`;
+    </script>
+</body>
+</html>
