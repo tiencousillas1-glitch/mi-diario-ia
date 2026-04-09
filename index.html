@@ -136,7 +136,6 @@
             50% { opacity: 0.3; }
         }
 
-        /* Day Tabs */
         .day-tabs {
             display: flex;
             justify-content: center;
@@ -180,7 +179,6 @@
             margin-top: 2px;
         }
 
-        /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -216,7 +214,16 @@
             letter-spacing: 0.1em;
         }
 
-        /* News Grid */
+        .section-header .tag.applicable {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--neon-green);
+        }
+
+        .section-header .tag.no-applicable {
+            background: rgba(255, 0, 110, 0.15);
+            color: var(--neon-pink);
+        }
+
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -238,6 +245,15 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
 
+        .news-card.applicable {
+            border-left: 3px solid var(--neon-green);
+        }
+
+        .news-card.no-applicable {
+            border-left: 3px solid var(--neon-pink);
+            opacity: 0.7;
+        }
+
         .news-category {
             display: inline-block;
             padding: 4px 10px;
@@ -249,12 +265,10 @@
             margin-bottom: 12px;
         }
 
-        .category-openclaw { background: rgba(108, 92, 231, 0.2); color: var(--accent-secondary); }
-        .category-agents { background: rgba(0, 212, 255, 0.15); color: var(--neon-blue); }
-        .category-startups { background: rgba(255, 0, 110, 0.15); color: var(--neon-pink); }
-        .category-coding { background: rgba(0, 255, 136, 0.15); color: var(--neon-green); }
-        .category-marketing { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-        .category-voice { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+        .category-github { background: rgba(108, 92, 231, 0.2); color: var(--accent-secondary); }
+        .category-industry { background: rgba(0, 212, 255, 0.15); color: var(--neon-blue); }
+        .category-product { background: rgba(0, 255, 136, 0.15); color: var(--neon-green); }
+        .category-warning { background: rgba(255, 0, 110, 0.15); color: var(--neon-pink); }
 
         .news-card h3 {
             font-family: 'Space Grotesk', sans-serif;
@@ -270,6 +284,40 @@
             line-height: 1.6;
         }
 
+        .news-potencial {
+            display: inline-flex;
+            gap: 3px;
+            margin: 8px 0;
+        }
+
+        .news-potencial .star {
+            color: #fbbf24;
+            font-size: 0.9em;
+        }
+
+        .news-potencial .star.empty {
+            opacity: 0.3;
+        }
+
+        .news-applicable {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .news-applicable.si {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--neon-green);
+        }
+
+        .news-applicable.no {
+            background: rgba(255, 0, 110, 0.2);
+            color: var(--neon-pink);
+        }
+
         .news-highlight {
             background: rgba(0, 212, 255, 0.08);
             border-left: 3px solid var(--neon-blue);
@@ -278,6 +326,16 @@
             border-radius: 0 8px 8px 0;
             font-size: 0.82em;
             color: #a0e8ff;
+        }
+
+        .news-porque {
+            background: rgba(0, 255, 136, 0.08);
+            border-left: 3px solid var(--neon-green);
+            padding: 10px 14px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.8em;
+            color: #a0ffa8;
         }
 
         .news-sources {
@@ -307,7 +365,6 @@
             border-color: var(--accent);
         }
 
-        /* Day Content */
         .day-content {
             display: none;
         }
@@ -323,7 +380,6 @@
             margin-bottom: 30px;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -335,11 +391,37 @@
             margin-bottom: 16px;
         }
 
-        .empty-state p {
-            font-size: 0.95em;
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85em;
         }
 
-        /* Footer */
+        .summary-table th,
+        .summary-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-table th {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+
+        .summary-table tr:hover {
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        .summary-table .si {
+            color: var(--neon-green);
+        }
+
+        .summary-table .no {
+            color: var(--neon-pink);
+        }
+
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -377,7 +459,6 @@
         </div>
     </header>
 
-    <!-- Day Tabs -->
     <div class="day-tabs">
         <button class="day-tab active" data-day="today">
             📅 Hoy
@@ -393,115 +474,345 @@
     </div>
 
     <div class="container">
-        <!-- TODAY -->
+        <!-- HOY - JUEVES 9 ABRIL -->
         <div class="day-content active" id="content-today">
-            <p class="day-date" id="today-date">Martes 7 de Abril, 2026</p>
+            <p class="day-date">Jueves 9 de Abril, 2026</p>
             
             <div class="section-header">
-                <span class="icon">🚀</span>
-                <h2>Startup & Oportunidades</h2>
-                <span class="tag">Hoy</span>
-            </div>
-            <div class="news-grid">                <article class="news-card">
-                    <span class="news-category category-agents">🤖 Modelo AI</span>
-                    <h3>Google Gemma 4</h3>
-                    <p>Familia de modelos open-weight (2B a 31B), enfocados en razonamiento avanzado y agentic workflows. Apache 2.0 license.</p>
-                    <div class="news-sources"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/" target="_blank" class="source-tag">🔗 Google Blog</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🤖 Modelo AI</span>
-                    <h3>Claude Mythos 5</h3>
-                    <p>~10T parámetros, enfocado en ciberseguridad y código. Rumoreado como uno de los modelos más potentes jamás creados.</p><div class="news-sources"><a href="https://www.anthropic.com/news" target="_blank" class="source-tag">🔗 Anthropic</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🤖 Modelo AI</span>
-                    <h3>Microsoft MAI</h3>
-                    <p>Tres modelos foundation nuevos: MAI-Transcribe-1, MAI-Voice-1, MAI-Image-2 (llegando a Copilot, Bing, PowerPoint)</p>
-                    <div class="news-sources"><a href="https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/" target="_blank" class="source-tag">🔗 Microsoft AI</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🤖 Modelo AI</span>
-                    <h3>NVIDIA Nemotron 3</h3>
-                    <p>Nemotron 3 Nano 4B y Super 120B (MoE híbrido Mamba-Transformer) con optimizaciones para AI agente local.</p><div class="news-sources"><a href="https://www.nvidia.com/en-us/ai-data-science/models/nemotron/" target="_blank" class="source-tag">🔗 NVIDIA</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-marketing">💰 Funding</span>
-                    <h3>Q1 2026: ~$300B en AI globally</h3>
-                    <p>OpenAI $122B, Anthropic $30B, xAI $20B, Microsoft $10B en Japón. 81% de inversiones dirigidas a AI.</p><div class="news-sources"><a href="https://news.crunchbase.com/venture/record-breaking-funding-ai-global-q1-2026/" target="_blank" class="source-tag">🔗 Crunchbase</a></div>
-                    <div class="news-sources"><a href="https://news.crunchbase.com/venture/record-breaking-funding-ai-global-q1-2026/" target="_blank" class="source-tag">🔗 Crunchbase</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-marketing">💰 Funding</span>
-                    <h3>Shield AI: $1.5B Series G</h3>
-                    <p>Defense AI, valuación $12.7B (autonomous flight tech)</p><div class="news-sources"><a href="https://www.shield.ai/" target="_blank" class="source-tag">🔗 Shield AI</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-marketing">💰 Funding</span>
-                    <h3>Nexthop AI: $500M Series B</h3>
-                    <p>Infraestructura de red para AI, Santa Clara</p><div class="news-sources"><a href="https://www.nexthop.ai/" target="_blank" class="source-tag">🔗 Nexthop AI</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-openclaw">🚀 Trending GitHub</span>
-                    <h3>OpenClaw — 210K+ stars</h3>
-                    <p>Asistente AI personal local, 50+ integraciones (WhatsApp, Telegram, Slack). Uno de los proyectos open-source que más rápido crecen en 2026.</p>
-                    <div class="news-sources"><a href="https://github.com/openclaw/openclaw" target="_blank" class="source-tag">🔗 GitHub</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-openclaw">🚀 Trending GitHub</span>
-                    <h3>CrewAI, Dify, LangGraph</h3>
-                    <p>CrewAI 44.3K estrellas. Dify 129K estrellas. LangGraph 24.8K estrellas. Low-code AI agent platforms en auge.</p><div class="news-sources"><a href="https://github.com/crewAI/crewAI" target="_blank" class="source-tag">🔗 CrewAI GitHub</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🔧 Agentes AI</span>
-                    <h3>MolmoWeb — Web Agent</h3>
-                    <p>Nuevo agente open-source para navegación web. Nuevo state-of-the-art en benchmarks de web-agents.</p><div class="news-sources"><a href="https://github.com/aiwaves-cn/agents" target="_blank" class="source-tag">🔗 MolmoWeb GitHub</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🔧 Agentes AI</span>
-                    <h3>Meta: Map Tribal Knowledge</h3>
-                    <p>Meta desplegó agentes especializados para mapear "conocimiento tribal" en sus pipelines de datos — redujo en 40% los tool calls por tarea.</p><div class="news-sources"><a href="https://engineering.meta.com/" target="_blank" class="source-tag">🔗 Meta Engineering</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🔧 Agentes AI</span>
-                    <h3>Breakthrough Eficiencia Energética</h3>
-                    <p>Nuevo enfoque podría reducir el consumo energético de AI hasta 100x mientras mejora la precisión, combinando redes neurales con razonamiento simbólico.</p>
-                    <div class="news-sources"><a href="https://www.sciencedaily.com/releases/2026/04/260405003952.htm" target="_blank" class="source-tag">🔗 ScienceDaily</a></div>
-                </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🔧 Agentes AI</span>
-                    <h3>Microsoft Agent Governance Toolkit</h3>
-                    <p>Framework de gobernanza para agentes AI autónomos en producción (3 de abril).</p><div class="news-sources"><a href="https://learn.microsoft.com/en-us/semantic-kernel/" target="_blank" class="source-tag">🔗 Microsoft</a></div>
-                </article></div></div>
-
-            <div class="section-header" style="margin-top: 40px;">
-                <span class="icon">🦞</span>
-                <h2>OpenClaw & AI Agents</h2>
+                <span class="icon">🔥</span>
+                <h2>Proyectos Trending en GitHub (AI)</h2>
             </div>
             <div class="news-grid">
-                <article class="news-card">
-                    <span class="news-category category-openclaw">🆕 Update</span>
-                    <h3>OpenClaw 2026.4.2: Nuevas Funciones</h3><div class="news-sources"><a href="https://github.com/openclaw/openclaw/releases" target="_blank" class="source-tag">🔗 GitHub Releases</a></div>
-                    <p>Breaking changes en xAI y web fetch (config migration requerida). Mejoras en Task Flow, Android assistant entrypoints, y exec defaults modo YOLO.</p>
-                    <div class="news-highlight">💡 Después de actualizar, ejecutar: openclaw doctor --fix</div>
-                    <div class="news-sources">
-                        <a href="https://github.com/openclaw/openclaw/releases" target="_blank" class="source-tag">📦 Releases</a>
+                <article class="news-card applicable">
+                    <span class="news-category category-github">🚀 GitHub Trending</span>
+                    <h3>NousResearch/hermes-agent — 41k ⭐</h3>
+                    <p>"The agent that grows with you." Framework de agente AI con herramientas self-improving.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
                     </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Es el agente de Hermes, tu socio en Nerve. Podemos estudiar su arquitectura para mejorar nuestra configuración de OpenClaw y potencialmente integrar su workflow.</div>
+                    <div class="news-sources"><a href="https://github.com/NousResearch/hermes-agent" target="_blank" class="source-tag">🔗 GitHub</a></div>
                 </article>
-                <article class="news-card">
-                    <span class="news-category category-agents">🤖 Hermes Agent</span>
-                    <h3>Hermes-Paperclip Adapter</h3><div class="news-sources"><a href="https://github.com/NousResearch/hermes-paperclip-adapter" target="_blank" class="source-tag">🔗 GitHub</a></div>
-                    <p>Nous Research publicó el adapter oficial para integrar Hermes Agent con Paperclip. Cada agent mantiene su skill set mientras opera bajo la orchestra.</p>
-                    <div class="news-highlight">💡 Posible usar Clowy (OpenClaw) + Hermes Agent + Paperclip = equipo completo.</div>
-                    <div class="news-sources">
-                        <a href="https://github.com/NousResearch/hermes-paperclip-adapter" target="_blank" class="source-tag">🔗 GitHub</a>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-github">🚀 GitHub Trending</span>
+                    <h3>HKUDS/DeepTutor — 14k ⭐</h3>
+                    <p>"DeepTutor: Agent-Native Personalized Learning Assistant." Tutoring AI con arquitectura nativa para agentes.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
                     </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Para Bolivia Tours podemos crear tours educativos con IA: historia de Bolivia, cultura, naturaleza. El modelo podría adaptarse para crear experiencias de aprendizaje personalizadas para turistas.</div>
+                    <div class="news-sources"><a href="https://github.com/HKUDS/DeepTutor" target="_blank" class="source-tag">🔗 GitHub</a></div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-github">🚀 GitHub Trending</span>
+                    <h3>OpenBMB/VoxCPM</h3>
+                    <p>Tokenizer-Free TTS multilingüe, voice cloning y diseño de voz creativa. Sin tokenizador, más rápido y flexible.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Para dar voz a Clowy en español sin depender de APIs caras. Voice cloning podría usarse para crear guías turísticas parlantes en idiomas múltiples.</div>
+                    <div class="news-sources"><a href="https://github.com/OpenBMB/VoxCPM" target="_blank" class="source-tag">🔗 GitHub</a></div>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-github">🚀 GitHub Trending</span>
+                    <h3>coleam00/Archon — 14k ⭐</h3>
+                    <p>"The first open-source harness builder for AI coding." Hace AI coding determinístico y repetible.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">❌ NO APLICA</span>
+                    <p>Es para devs que construyen harness de coding. Por ahora no aplica, pero vigilar para futuro.</p>
+                    <div class="news-sources"><a href="https://github.com/coleam00/Archon" target="_blank" class="source-tag">🔗 GitHub</a></div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-github">🚀 GitHub Trending</span>
+                    <h3>forrestchang/andrej-karpathy-skills</h3>
+                    <p>Un CLAUDE.md para mejorar Claude Code, derivado de observaciones de Karpathy sobre pitfalls en LLM coding.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Podemos aplicar principios de este repo para mejorar nuestros prompts y workflows de coding con OpenClaw.</div>
+                    <div class="news-sources"><a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" class="source-tag">🔗 GitHub</a></div>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-github">🚀 GitHub Trending</span>
+                    <h3>shiyu-coder/Kronos</h3>
+                    <p>Foundation Model para el lenguaje de mercados financieros.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">❌ NO APLICA</span>
+                    <p>Específico para mercados financieros. No aplica para tours de Bolivia o proyectos actuales.</p>
+                    <div class="news-sources"><a href="https://github.com/shiyu-coder/Kronos" target="_blank" class="source-tag">🔗 GitHub</a></div>
+                </article>
+            </div>
+
+            <div class="section-header" style="margin-top: 40px;">
+                <span class="icon">🏢</span>
+                <h2>Big Moves en la Industria</h2>
+            </div>
+            <div class="news-grid">
+                <article class="news-card applicable">
+                    <span class="news-category category-industry">🏢 Anthropic</span>
+                    <h3>Project Glasswing</h3>
+                    <p>Su modelo cyber AI más potente es "demasiado peligroso para liberar públicamente." Lanzan programa con partners como AWS, Apple, Google, Microsoft, Nvidia, JPMorgan.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Las políticas de seguridad y el programa de partners muestra hacia dónde va la industria. Podemos aprender de sus prácticas de safety para nuestros agentes.</div>
+                    <div class="news-sources"><a href="https://venturebeat.com/technology/anthropic-says-its-most-powerful-ai-cyber-model-is-too-dangerous-to-release" target="_blank" class="source-tag">🔗 VentureBeat</a></div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-industry">🏢 NVIDIA</span>
+                    <h3>Agent Toolkit @ GTC 2026</h3>
+                    <p>Agent Toolkit open-source para construir agentes AI autónomos. 17 empresas enterprise confirmadas: Adobe, Salesforce, SAP, ServiceNow, Siemens, CrowdStrike, Atlassian, Palantir.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Este toolkit podría mejorar la capacidad de nuestros agentes OpenClaw. Monitorear cuando salga open-source.</div>
+                    <div class="news-sources"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank" class="source-tag">🔗 VentureBeat</a></div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-industry">🏢 Microsoft</span>
+                    <h3>3 nuevos AI Models</h3>
+                    <p>Lanzó 3 nuevos AI models en tiro directo a OpenAI y Google.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Competencia genera mejores precios y opciones. Considerar si estos modelos ofrecen mejor costo-beneficio para nuestras tareas.</div>
+                    <div class="news-sources"><a href="https://venturebeat.com/technology/microsoft-launches-3-new-ai-models-in-direct-shot-at-openai-and-google" target="_blank" class="source-tag">🔗 VentureBeat</a></div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-industry">🏢 GLM</span>
+                    <h3>GLM 5.1 Open-source</h3>
+                    <p>LLM open-source que supera a GPT-4 en benchmarks.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Alternativa open-source poderosa. Podría desplegarse localmente para reducir costos de API en proyectos como Bolivia Tours.</div>
+                    <div class="news-sources"><a href="https://venturebeat.com/technology/ai-joins-the-8-hour-work-day-as-glm-ships-5-1-open-source-llm-beating-opus-4" target="_blank" class="source-tag">🔗 VentureBeat</a></div>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-industry">🏢 Anthropic + Google</span>
+                    <h3>Deal de $30B+ TPU Capacity</h3>
+                    <p>Deal de "multiple gigawatts" de próxima-gen TPU capacity. Revenue run-rate > $30B.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">ℹ️ INFO</span>
+                    <p>Muestra la escala de inversión en infraestructura AI. Importante para entender el mercado pero no impacta directamente.</p>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-industry">🏢 Jeff Bezos</span>
+                    <h3>Project Prometheus</h3>
+                    <p>Atrajo a Kyle Kozic (ex-xAI cofounder, ex-OpenAI) para liderar infraestructura. Focused en AI para manufacturing.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">❌ NO APLICA</span>
+                    <p>Manufacturing específico. No aplica directamente para nosotros.</p>
+                </article>
+            </div>
+
+            <div class="section-header" style="margin-top: 40px;">
+                <span class="icon">📱</span>
+                <h2>Productos & Features Nuevas</h2>
+            </div>
+            <div class="news-grid">
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📱 Google</span>
+                    <h3>Google Meet AI Translation</h3>
+                    <p>Traducción de voz en tiempo real ahora en mobile (EN↔ES, FR, DE, PT, IT).</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Para tours de Bolivia podemos ofrecer traducción en tiempo real para turistas extranjeros. Integración con Google Meet = potencial para servicios de guías remotos.</div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📱 Google</span>
+                    <h3>Google AI Edge Eloquent</h3>
+                    <p>App de transcripción AI offline y gratuita, sin límites, iOS (Android y macOS coming).</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Ya tenemos whisper pero esta es gratis y offline. Probar para transcripción de audios de tourists.</div>
+                </article>
+
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📱 Tubi + ChatGPT</span>
+                    <h3>Streaming con AI Conversacional</h3>
+                    <p>Primer streaming service con app en ChatGPT — puedes describir lo que quieres ver en lenguaje natural.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Modelo de cómo integrar AI conversacional en productos de consumo. Inspiración para interfaces de tours.</div>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-product">📱 Google</span>
+                    <h3>Google Finance AI</h3>
+                    <p>Chatbot Gemini integrado expandido a 100+ países.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">❌ NO APLICA</span>
+                    <p>Finance específico.</p>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-product">📱 OpenAI</span>
+                    <h3>Child Safety Blueprint</h3>
+                    <p>Framework para políticas de protección infantil en AI.</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">❌ NO APLICA</span>
+                    <p>No aplica para nuestro caso de uso.</p>
+                </article>
+            </div>
+
+            <div class="section-header" style="margin-top: 40px;">
+                <span class="icon">⚠️</span>
+                <h2>Lo que viene</h2>
+            </div>
+            <div class="news-grid">
+                <article class="news-card applicable">
+                    <span class="news-category category-warning">⚠️ Meta</span>
+                    <h3>Open-source Models</h3>
+                    <p>"Eventually" liberará versiones open-source de sus nuevos modelos (primero quieren asegurar safety).</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable si">✅ APLICABLE</span>
+                    <div class="news-porque">Más opciones open-source = más alternativas para desplegar localmente y reducir costos.</div>
+                </article>
+
+                <article class="news-card no-applicable">
+                    <span class="news-category category-warning">⚠️ Anthropic</span>
+                    <h3>Pierde Apelación</h3>
+                    <p>Perdió apelación para pausar su designación de "supply chain risk."</p>
+                    <div class="news-potencial">
+                        <span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                    </div>
+                    <span class="news-applicable no">ℹ️ INFO</span>
+                    <p>Solo información del mercado, no impacta directamente.</p>
+                </article>
+            </div>
+
+            <div class="section-header" style="margin-top: 40px;">
+                <span class="icon">🎯</span>
+                <h2>Resumen de Relevancia para Nosotros</h2>
+            </div>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Noticia</th>
+                        <th>Relevancia</th>
+                        <th>Por qué</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>hermes-agent</td>
+                        <td class="si">✅ SÍ</td>
+                        <td>Arquitectura para mejorar OpenClaw</td>
+                    </tr>
+                    <tr>
+                        <td>DeepTutor</td>
+                        <td class="si">✅ SÍ</td>
+                        <td>Tours educativos en Bolivia</td>
+                    </tr>
+                    <tr>
+                        <td>VoxCPM</td>
+                        <td class="si">✅ SÍ</td>
+                        <td>Voice cloning para guías turísticas</td>
+                    </tr>
+                    <tr>
+                        <td>NVIDIA Agent Toolkit</td>
+                        <td class="si">✅ SÍ</td>
+                        <td>Mejora capacidad de agentes</td>
+                    </tr>
+                    <tr>
+                        <td>GLM 5.1</td>
+                        <td class="si">✅ SÍ</td>
+                        <td>Alternativa open-source económica</td>
+                    </tr>
+                    <tr>
+                        <td>Google Meet Translation</td>
+                        <td class="si">✅ SÍ</td>
+                        <td>Traducción temps real para tours</td>
+                    </tr>
+                    <tr>
+                        <td>Archon</td>
+                        <td class="no">❌ NO</td>
+                        <td>Muy técnico, no aplica ahora</td>
+                    </tr>
+                    <tr>
+                        <td>Kronos</td>
+                        <td class="no">❌ NO</td>
+                        <td>Mercados financieros</td>
+                    </tr>
+                    <tr>
+                        <td>Project Prometheus</td>
+                        <td class="no">❌ NO</td>
+                        <td>Manufacturing</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="section-header" style="margin-top: 40px;">
+                <span class="icon">🚀</span>
+                <h2>Acciones Recomendadas</h2>
+            </div>
+            <div class="news-grid">
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📋 Prioridad ALTA</span>
+                    <h3>Estudiar hermes-agent</h3>
+                    <p>Arquitectura del agente de Hermes para mejorar nuestra configuración de OpenClaw y crear sinergia entre equipos.</p>
+                </article>
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📋 Prioridad ALTA</span>
+                    <h3>Explorar VoxCPM</h3>
+                    <p>Voice cloning para dar voz a Clowy y crear guías turísticas parlantes en idiomas múltiples.</p>
+                </article>
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📋 Prioridad MEDIA</span>
+                    <h3>Monitorear NVIDIA Agent Toolkit</h3>
+                    <p>Cuando salga open-source, evaluar cómo mejora nuestras capacidades de agente.</p>
+                </article>
+                <article class="news-card applicable">
+                    <span class="news-category category-product">📋 Prioridad MEDIA</span>
+                    <h3>Evaluar GLM 5.1</h3>
+                    <p>Considerar despliegue local para reducir costos de API en proyectos como Bolivia Tours.</p>
                 </article>
             </div>
         </div>
 
         <!-- LUNES -->
         <div class="day-content" id="content-monday">
-            <p class="day-date">Noticias del Lunes</p>
+            <p class="day-date">Lunes 6 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -511,7 +822,7 @@
 
         <!-- MARTES -->
         <div class="day-content" id="content-tuesday">
-            <p class="day-date">Noticias del Martes</p>
+            <p class="day-date">Martes 7 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -520,7 +831,7 @@
 
         <!-- MIÉRCOLES -->
         <div class="day-content" id="content-wednesday">
-            <p class="day-date">Noticias del Miércoles</p>
+            <p class="day-date">Miércoles 8 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -529,7 +840,7 @@
 
         <!-- JUEVES -->
         <div class="day-content" id="content-thursday">
-            <p class="day-date">Noticias del Jueves</p>
+            <p class="day-date">Jueves 9 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -538,7 +849,7 @@
 
         <!-- VIERNES -->
         <div class="day-content" id="content-friday">
-            <p class="day-date">Noticias del Viernes</p>
+            <p class="day-date">Viernes 10 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -547,7 +858,7 @@
 
         <!-- SÁBADO -->
         <div class="day-content" id="content-saturday">
-            <p class="day-date">Noticias del Sábado</p>
+            <p class="day-date">Sábado 11 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -556,7 +867,7 @@
 
         <!-- DOMINGO -->
         <div class="day-content" id="content-sunday">
-            <p class="day-date">Noticias del Domingo</p>
+            <p class="day-date">Domingo 12 de Abril, 2026</p>
             <div class="empty-state">
                 <div class="icon">📭</div>
                 <p>No hay noticias guardadas para este día aún.</p>
@@ -568,12 +879,11 @@
         <div class="footer-brand">🦞</div>
         <p class="footer-text">
             Generado por <a href="#">Clowy</a> — Agente IA de Tien<br>
-            <small>Actualizado: <span id="last-update"></span></small>
+            <small>9 de Abril 2026 — Análisis de Relevancia incluido</small>
         </p>
     </footer>
 
     <script>
-        // Tab switching
         const tabs = document.querySelectorAll('.day-tab');
         const contents = document.querySelectorAll('.day-content');
 
@@ -589,17 +899,14 @@
             });
         });
 
-        // Set today's date
         const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const today = new Date();
         const dayName = days[today.getDay()];
         const dayShort = dayName.substring(0, 3).toUpperCase();
         
         document.getElementById('today-dayname').textContent = dayShort;
-        document.getElementById('today-date').textContent = `${dayName}, ${today.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}`;
         document.getElementById('last-update').textContent = today.toLocaleString('es-ES', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         
-        // Auto-select today tab
         document.querySelector('[data-day="today"]').click();
     </script>
 </body>
